@@ -1,0 +1,17 @@
+.btn {
+  /* border: 1px solid black; */
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-color: rgb(82, 82, 218);
+  color: white;
+  transition: transform 0.3s ease-in-out;
+}
+
+.btn:hover {
+  transform: scale(1.07);
+}
+
+.wrapper {
+  text-align: center;
+}
