@@ -5,12 +5,13 @@ const SearchBar = ({ handleSetSearch }) => {
   const [value, setValue] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleSetSearch(value);
-    if (!value) {
+    if (!value.trim()) {
       toast("Enter the text", {
         position: "top-right",
       });
+      return;
     }
+    handleSetSearch(value);
     setValue("");
   };
   return (

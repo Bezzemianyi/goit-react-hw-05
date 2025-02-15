@@ -5,27 +5,29 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import Loader from "./components/Loader/Loader";
-import toast from "react-hot-toast";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import s from "./App.module.css";
+import ImageModal from "./components/ImageModal/ImageModal";
 
 const App = () => {
   const [photos, setPhotos] = useState([]);
   const [isLoad, setIsLoad] = useState(false);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [error, setError] = useState(null);
   useEffect(() => {
     const getData = async () => {
       if (!search) return;
       try {
         setIsLoad(true);
+        setError(null);
         const { results } = await fetchGallery(search, page);
         setPhotos((prevPhotos) =>
           page === 1 ? results : [...prevPhotos, ...results]
         );
       } catch {
-        toast.error("Сan't connect to the server...", {
-          position: "top-right",
-        });
+        setError("Can't connect to the server...");
       } finally {
         setIsLoad(false);
       }
@@ -40,9 +42,23 @@ const App = () => {
   return (
     <div>
       <SearchBar handleSetSearch={handleSetSearch} />
-      <ImageGallery photos={photos} />
-      {photos.length ? <LoadMoreBtn setPage={setPage} /> : ""}
+      {error ? (
+        <ErrorMessage message={error} />
+      ) : (
+        <>
+          <ImageGallery photos={photos} onImageClick={setSelectedImage} />
+          {photos.length > 0 && <LoadMoreBtn setPage={setPage} />}
+        </>
+      )}
       {isLoad && <Loader />}
+      {selectedImage && (
+        <ImageModal
+          isOpen={!!selectedImage}
+          onClose={() => setSelectedImage(null)}
+          imageUrl={selectedImage.urls.regular}
+          alt={selectedImage.alt_description}
+        />
+      )}
     </div>
   );
 };
