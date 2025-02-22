@@ -7,6 +7,7 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
+import s from "./MoviesPage.module.css";
 const MoviesPage = () => {
   const [searchMovie, setSearchMovie] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -48,11 +49,14 @@ const MoviesPage = () => {
     <div>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         <Form>
-          <Field name="query" />
-          <button type="submit"> Search</button>
+          <Field className={s.input} name="query" />
+          <button className={s.btn} type="submit">
+            {" "}
+            Search
+          </button>
         </Form>
       </Formik>
-      <ul>
+      <ul className={s.list}>
         {searchMovie.map((movie) => (
           <li key={movie.id}>
             <Link to={`/movies/${movie.id}`} state={location}>

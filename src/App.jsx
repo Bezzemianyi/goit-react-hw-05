@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation/Navigation";
 import MovieDetailsPage from "./pages/MovieDetailsPage/MovieDetailsPage";
 import MovieCast from "./components/MovieCast/MovieCast";
 import MovieReviews from "./components/MovieReviews/MovieReviews";
+import s from "./App.module.css";
 
 const App = () => {
   return (

@@ -6,7 +6,7 @@ const buildLinkClass = ({ isActive }) => {
 };
 const Navigation = () => {
   return (
-    <nav>
+    <nav className={s.header}>
       <NavLink className={buildLinkClass} to="/">
         Home
       </NavLink>

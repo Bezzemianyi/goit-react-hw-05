@@ -7,6 +7,7 @@ import {
   useParams,
 } from "react-router-dom";
 import { fetchTrandMoviesById } from "../../services/api";
+import s from "./MovieDeatailsPage.module.css";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
@@ -26,31 +27,34 @@ const MovieDetailsPage = () => {
   }
 
   return (
-    <div>
-      <Link to={goBackUrl.current}> Go Back </Link>
-      <div>
+    <div className={s.section}>
+      <NavLink className={s.back} to={goBackUrl.current}>
+        {" "}
+        Go Back{" "}
+      </NavLink>
+      <div className={s.filmInfo}>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={`movie.title`}
           width={300}
         />
         <ul>
-          <li>
-            <h2>{movie.title}</h2>
+          <li className={s.item}>
+            <h2 className={s.title}>{movie.title}</h2>
             <p>Vote avarage: {movie.vote_average}</p>
           </li>
-          <li>
-            <h3>Overview</h3>
+          <li className={s.item}>
+            <h3 className={s.categories}>Overview</h3>
             <p>{movie.overview}</p>
           </li>
-          <li>
-            <h3>Genres</h3>
+          <li className={s.item}>
+            <h3 className={s.categories}>Genres</h3>
             <p>{movie.genres.map((genre) => genre.name).join(", ")}</p>
           </li>
         </ul>
       </div>
-      <p>Additional iformation</p>
-      <nav>
+      <p className={s.addInf}>Additional iformation</p>
+      <nav className={s.movieNav}>
         <NavLink to="cast">Cast</NavLink>
         <NavLink to="reviews">Reviews</NavLink>
       </nav>
