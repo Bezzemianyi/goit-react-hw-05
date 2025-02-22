@@ -18,8 +18,8 @@ const MovieCast = lazy(() => import("./components/MovieCast/MovieCast"));
 const MovieReviews = lazy(() =>
   import("./components/MovieReviews/MovieReviews")
 );
-const NotFoundPage = lazy(() => "./pages/NotFoundPage/NotFoundPage");
-const Navigation = lazy(() => "./components/Navigation/Navigation");
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage/NotFoundPage"));
+const Navigation = lazy(() => import("./components/Navigation/Navigation"));
 
 const App = () => {
   return (
