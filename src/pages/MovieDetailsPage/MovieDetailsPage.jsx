@@ -12,19 +12,28 @@ import s from "./MovieDeatailsPage.module.css";
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const location = useLocation();
   const goBackUrl = useRef(location?.state ?? "/movies");
 
   useEffect(() => {
     const getData = async () => {
-      const data = await fetchTrandMoviesById(movieId);
-      setMovie(data);
+      try {
+        setLoading(true);
+        const data = await fetchTrandMoviesById(movieId);
+        setMovie(data);
+      } catch (error) {
+        setError("Failed to fetch movie details.");
+      } finally {
+        setLoading(false);
+      }
     };
     getData();
   }, [movieId]);
-  if (!movie) {
-    return <h2>Loading...</h2>;
-  }
+
+  if (loading) return <h2>Loading...</h2>;
+  if (error) return <p className={s.error}>{error}</p>;
 
   return (
     <div className={s.section}>

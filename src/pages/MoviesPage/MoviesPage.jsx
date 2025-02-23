@@ -8,8 +8,11 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import s from "./MoviesPage.module.css";
+import MovieList from "../../components/MovieList/MovieList";
 const MoviesPage = () => {
   const [searchMovie, setSearchMovie] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,11 +21,15 @@ const MoviesPage = () => {
     if (!query) return;
 
     const getMovies = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const { results } = await fetchSearchMovies(query);
         setSearchMovie(results);
       } catch (error) {
-        console.error(error);
+        setError("Something went wrong! Try again later.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -56,15 +63,12 @@ const MoviesPage = () => {
           </button>
         </Form>
       </Formik>
-      <ul className={s.list}>
-        {searchMovie.map((movie) => (
-          <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`} state={location}>
-              {movie.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {loading && <p>Loading...</p>}
+      {error && <p className={s.error}>{error}</p>}
+
+      {!loading && !error && searchMovie.length > 0 && (
+        <MovieList movies={searchMovie} location={location} />
+      )}
     </div>
   );
 };

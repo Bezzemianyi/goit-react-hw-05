@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
-import { fetchTrandMovies } from "../../services/api";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import s from "./MovieList.module.css";
-const MovieList = ({ movies }) => {
-  const location = useLocation();
+const MovieList = ({ movies, location }) => {
   return (
     <div>
       <ul className={s.list}>
