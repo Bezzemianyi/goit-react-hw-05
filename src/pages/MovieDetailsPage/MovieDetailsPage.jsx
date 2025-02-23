@@ -15,7 +15,7 @@ const MovieDetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const location = useLocation();
-  const goBackUrl = useRef(location?.state ?? "/movies");
+  const [goBackUrl, setGoBackUrl] = useState(location.state?.from ?? "/movies");
 
   useEffect(() => {
     const getData = async () => {
@@ -37,7 +37,7 @@ const MovieDetailsPage = () => {
 
   return (
     <div className={s.section}>
-      <NavLink className={s.back} to={goBackUrl.current}>
+      <NavLink className={s.back} to={goBackUrl}>
         {" "}
         Go Back{" "}
       </NavLink>
